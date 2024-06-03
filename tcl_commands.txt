@@ -1,0 +1,35 @@
+report_timing > reports_place/report_timing_after_place.rpt
+report_power > reports_place/report_power_after_place.rpt
+report_area > reports_place/report_area_after_place.rpt
+report_qor > reports_place/report_qor_after_place.rpt
+
+*******************************************************
+
+**************tcl commands*****************************
+
+*******************************************************
+//placement tcs commands
+
+checkplace //finds placement details
+optDesign -preCTS // corrects any slack violations after placemeent
+report_timing //get timing reports
+timeDesign -preCTS	
+
+
+//CTS commands
+set_ccopt_property buffer_cells {CLKBUFX2 CLKBUFX20 CLKBUFX3 CLKBUFX8 CLKBUFX12 CLKBUFX4}
+ccopt_design
+
+set_ccopt_property target_max_trans 0.1
+ctd_win
+
+//report to see slack and stuff
+timeDesign -postCTS
+
+
+
+//rc parasatic extraction and gds2 file generation will come in the last video 
+
+
+
+report_timing > reports_routing/report_timing_after_routing.rpt
